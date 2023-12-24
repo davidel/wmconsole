@@ -1,0 +1,2 @@
+# wmconsole
+Windows Mobile console
