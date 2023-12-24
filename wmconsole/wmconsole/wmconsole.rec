@@ -1,0 +1,55 @@
+;
+;  WmConsole by Davide Libenzi (Windows Mobile console server)
+;  Copyright (C) 2006  Davide Libenzi
+;
+;  This program is free software; you can redistribute it and/or modify
+;  it under the terms of the GNU General Public License as published by
+;  the Free Software Foundation; either version 2 of the License, or
+;  (at your option) any later version.
+;
+;  This program is distributed in the hope that it will be useful,
+;  but WITHOUT ANY WARRANTY; without even the implied warranty of
+;  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;  GNU General Public License for more details.
+;
+;  You should have received a copy of the GNU General Public License
+;  along with this program; if not, write to the Free Software
+;  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+;
+;  Davide Libenzi <davidel@xmailserver.org>
+;
+
+1 SEQUENCE
+  ; WMCOLSOLE service class UUID
+  UUID16 0409
+  END
+4 SEQUENCE
+    SEQUENCE 
+      ; L2CAP protocol identifier
+      UUID16 100
+    END
+    SEQUENCE
+      ; RFCOMM protocol identifier
+      UUID16 3
+      ; NOTE: WMCONSOLE is not guaranteed to run on RFCOMM channel C.
+      ;       This value may need to change at run time to appropriate channel.
+      UINT8 C
+    END
+  END
+6 SEQUENCE
+    ; language base ID information
+    UINT16 656E
+    UINT16 6A
+    UINT16 100
+  END
+9 SEQUENCE
+    SEQUENCE
+      ; profile descriptor list.
+      ; Protocol 0409
+      UUID16 0409
+      ; profile version for 0409
+      UINT16 100
+    END
+  END
+100 STRING WMCONSOLE
+

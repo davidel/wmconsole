@@ -1,0 +1,10 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\Drivers\BuiltIn\rconsole]
+"Flags"=dword:00000002
+"Keep"=dword:00000001
+"Index"=dword:00000000
+"Order"=dword:00000009
+"Prefix"="RCX"
+"Dll"="rconsole.dll"
+

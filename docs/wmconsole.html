@@ -1,0 +1,365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta name="Author" content="Davide Libenzi">
+  <meta name="GENERATOR" content="Mozilla 1.2">
+  <meta name="Keywords"
+ content="WmConsole,RConsole,Windows,Mobile,SmartPhone,PocketPC,console,bluetooth,linux,bluez,RFCOMM,qtty">
+  <title>WmConsole Home Page</title>
+</head>
+<body style="color: rgb(0, 0, 255);">
+<p style="font-family: monospace;" align="center"><span
+ style="font-weight: bold;">WmConsole
+Home Page</span><br>
+<br>
+</p>
+<span style="font-weight: bold; font-family: monospace;">WmConsole</span><span
+ style="font-family: monospace;"> is a console server
+for Windows Mobile devices, that listen over BlueTooth RFCOMM channels,
+and allows the user to interact with
+the device using a command line interface from a Linux or Windows
+workstation.&nbsp;&nbsp;&nbsp; Once the </span><span
+ style="font-weight: bold; font-family: monospace;">WmConsole</span><span
+ style="font-family: monospace;">
+server is run, it'll listen on a configurable RFCOMM channel by waiting
+for client connections.&nbsp;&nbsp;&nbsp; The server also creates a new
+SDP service
+called</span><span style="font-weight: bold; font-family: monospace;"></span><span
+ style="font-family: monospace;"> "WmConsole", and
+advertises it as running onto its listening channel.&nbsp;&nbsp;&nbsp;
+From the
+client side, the </span><a style="font-family: monospace;"
+ href="qtty.html">QTTY</a><span style="font-family: monospace;">
+program has to be used to connect to the </span><span
+ style="font-weight: bold; font-family: monospace;">WmConsole</span><span
+ style="font-family: monospace;"> server.&nbsp;&nbsp;&nbsp;
+The </span><a style="font-family: monospace;" href="qtty.html">QTTY</a><span
+ style="font-family: monospace;"> software can be built for Linux
+(needs the </span><a style="font-family: monospace;"
+ href="http://www.bluez.org">BlueZ</a><span
+ style="font-family: monospace;"> package) and
+Windows (needs the
+Microsoft SDK - but a pre-built binary is also
+supplied).&nbsp;&nbsp;&nbsp; Once
+logged-in, the user will be able to access a thoruogh set of commands
+to interact with the device (file upload/download, directory/tree
+creation/removal, process creation with STDOUT redirection, process
+kill, file search, registry manipulation/search, reboot, and many
+others - the 'help'
+command will list them all, together with a brief
+description).&nbsp;&nbsp;&nbsp;
+Since
+Windows Mobile does not allow handle inheritance and standard
+input/output redirection, a special device driver (</span><span
+ style="font-weight: bold; font-family: monospace;">RConsole</span><span
+ style="font-family: monospace;">) is used in order to
+achieve binaries execution with output on the
+console.&nbsp;&nbsp;&nbsp; The </span><span
+ style="font-weight: bold; font-family: monospace;">RConsole</span><span
+ style="font-family: monospace;">
+device driver manages a
+kernel pipe (ten actually - from 0 up to 9), and together with the </span><span
+ style="font-style: italic; font-family: monospace;">SetStdioPathW()</span><span
+ style="font-family: monospace;"> library call,
+allows </span><span style="font-weight: bold; font-family: monospace;">WmConsole</span><span
+ style="font-family: monospace;"> to execute an
+external binary by capturing its output on the console. &nbsp;&nbsp;
+This came really handy to me, since it allowed the creation and usage
+of simple command line utilities that where using standard POSIX stdio
+output. &nbsp;&nbsp; The </span><span
+ style="font-weight: bold; font-family: monospace;">WmConsole</span><span
+ style="font-family: monospace;">
+binary is installed inside
+the "\Program Files\WmConsole" directory, and it must be manually run
+using File Explorer.&nbsp;&nbsp;&nbsp; </span><span
+ style="font-weight: bold; font-family: monospace;">WmConsole</span><span
+ style="font-family: monospace;">
+listen by default on the RFCOMM channel 11, but this can be changed
+either by specifying the "-P CHNUM" command line parameter, or by
+creating a registry string value named "Channel" inside the
+"HKEY_LOCAL_MACHINE\SOFTWARE\WmConsole" key and by setting its value to
+the desired one.&nbsp;&nbsp;&nbsp; The default username and password
+for the </span><span style="font-weight: bold; font-family: monospace;">WmConsole</span><span
+ style="font-family: monospace;"> server are
+user="wmconsole" and password="server".&nbsp;&nbsp;&nbsp; The "\Program
+Files\WmConsole\passwd" file stores the usernames and passwords, that
+you're suggested to change if you plan to keep the </span><span
+ style="font-weight: bold; font-family: monospace;">WmConsole</span><span
+ style="font-family: monospace;"> server permanently running
+on your device.&nbsp;&nbsp;&nbsp; Look at the </span><a
+ style="font-family: monospace;" href="qtty.html">QTTY</a><span
+ style="font-family: monospace;">
+page
+for instructions on how to use it to login into a </span><span
+ style="font-weight: bold; font-family: monospace;">WmConsole</span><span
+ style="font-family: monospace;"> (or </span><a
+ style="font-family: monospace;" href="qconsole.html">QConsole</a><span
+ style="font-family: monospace;">) server.</span><br
+ style="font-family: monospace;">
+<br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<div style="text-align: center; font-family: monospace;"><b>Commands
+List</b><br>
+</div>
+<br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<span style="font-family: monospace;">pwd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Prints the current directory</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">cd
+DIR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Change current directory to DIR (.. is allowed)</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">ls
+[DIR/FILE]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Lists the current directory or the specified path</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">ps&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Lists currently running processes</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">lsmod
+[MATCH]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Lists modules loaded by processes whose name match MATCH</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">wld
+MATCH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Lists all processes that load modules matching MATCH</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">kill
+PID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Terminates the process identified by PID</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">run EXE
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Starts the exe with the specified parameters</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">exec EXE
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Starts the exe with the specified parameters and links to</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+the process standard output/input. This differs from the 'run'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+command because it waits for the program termination<br
+ style="font-family: monospace;">
+</span><span style="font-family: monospace;">df
+[DIR]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Prints the disk space statistics for DIR (or object store</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+in case DIR is not specified</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">mem&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Displays memory usage statistics</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">lssvc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Lists device services</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">svc -{S,T}
+SVC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+Controls services functionality. Supported actions are:</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+S : Start service SVC</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+T : Stop service SVC</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">lsdev&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Lists system devices</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">mkdir [-p]
+DIR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+Create directory DIR. Allowed flags for the command are:</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+p : Create all the intermediate directories, if missing</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">rmdir
+DIR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Remove directory DIR (must be empty)</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">rm
+FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Remove file FILE</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">mv OLD
+NEW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Renames files or directories from OLD to NEW</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">cp SRC
+DST&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Copy SRC file onto DST file. If SRC is a directory, the whole</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+SRC tree will be copied</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">rmtree
+DIR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Remove directory DIR and all its subtree (dangerous)</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">chmod MODE
+FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+Change the access mode of FILE applying MODE changes</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+([+-][hws]+ | h=hidden w=write s=system)</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Exit session</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">shutdown&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Exit session and shutdown the WmConsole server</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">reboot&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Exit session and reboot the device</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">cat
+FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Dump the content of remote file FILE on screen</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">find [-1s] PATH
+MATCH&nbsp;&nbsp;&nbsp;&nbsp; = Recursively searches PATH for MATCH
+file or directory name</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(wildcards allowed in MATCH). Allowed flags for the command are:</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1 : Do not recurse inside subdirectories</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+s : Print only the file path</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">put [-Rf] REM
+LOC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = Copies the local
+file(s) LOC to the remote file/path (on device) REM.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Wildcards allowed in LOC. Allowed flags for the command are:</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+R : Recurse to subdirectories</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+f : Forces the missing subdirectories creation on the device</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">get [-R] REM
+LOC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = Copies the
+remote file(s) (on device) REM to local file/path LOC.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Wildcards allowed in REM. Allowed flags for the command are:</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+R : Recurse to subdirectories</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">rpwd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Prints the current registry key</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">rcd
+KEY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Change current registry key to KEY (.. is allowed)</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">rls
+[KEY/RVAL]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Lists the current registry key or the specified KEY</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">rcat
+RVAL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Dump the content of registry path RVAL on screen</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">rfind KEY
+MATCH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+Recursively searches KEY path for MATCH value or key name</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">rrm
+RVAL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Remove the registry value RVAL</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">rrmtree
+KEY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Remove the registry key KEY and all its subtree (dangerous)</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">rmkkey
+KEY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Creates the registry key KEY</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">rset RVAL TYPE
+VALUE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = Sets the registry value RVAL to
+VALUE, with data type TYPE.</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Allowed data types for the command are:</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+SZ : String value</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DW : DWord value</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+BI : Binary value (VALUE is a sequence of 2 hexdigit numbers,</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+comma separated, like: 03,c2,fa,...)</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">rdig [-i] KEY TYPE
+DATA&nbsp;&nbsp; = Recursively searches the KEY registry path for DATA
+bytes. Allowed</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+data types for the command are:</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+SZ : String value</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DW : DWord value</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+BI : Binary value (VALUE is a sequence of 2 hexdigit numbers,</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+comma separated, like: 03,c2,fa,...)</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+The DATA parameter format depends on the TYPE. Allowed</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+flags for the command are:</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+i : Ignore case during string match</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">rexp [-R] KEY/RVAL
+FILE&nbsp;&nbsp; = Exports the registry value RVAL or key KEY, to the
+file path FILE.</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Allowed flags for the command are:</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+R : In case a registry key KEY is specified, exports the whole subtree</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">rimp
+FILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Imports the registry file FILE into the device registry. New keys</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+will be created if missing, and existing values will be overwritten</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= Prints this help screen</span><br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<br style="font-family: monospace;">
+<div style="text-align: left; font-family: monospace;"><br>
+</div>
+<p style="font-family: monospace;" align="center"><b>License
+and Software</b></p>
+<p style="font-family: monospace;" align="left"><span
+ style="font-weight: bold;">WmConsole</span>&nbsp;
+(and the <span style="font-weight: bold;">RConsole</span> device
+driver) is made available through the <a
+ href="http://www.gnu.org/licenses/gpl.html">GNU GPL</a> license
+together with the complete sources.&nbsp;&nbsp;&nbsp; The latest <span
+ style="font-weight: bold;">WmConsole</span> packages are available
+here :</p>
+<p style="font-family: monospace;" align="left"><a
+ href="wmconsole-0.18.zip">Source 0.18</a></p>
+<div style="text-align: left; font-family: monospace;"><a
+ href="wmconsole-0.18.cab">Windows
+Mobile 5 CAB 0.18</a><br>
+<br>
+<a href="wmconsole-0.18.wm4x.cab">Windows Mobile 4.x CAB 0.18</a><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<a style="font-weight: bold;" href="davide.html">Back Home</a><br>
+<br>
+<br>
+</div>
+</body>
+</html>

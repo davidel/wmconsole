@@ -1,2 +1,3 @@
 # wmconsole
-Windows Mobile console
+
+For more information see [wmconsole](http://www.xmailserver.org/wmconsole.html).

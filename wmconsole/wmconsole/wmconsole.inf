@@ -1,0 +1,68 @@
+
+[Version]
+Signature = "$Windows NT$"
+Provider = "Microsoft"
+CESignature = "$Windows CE$"
+
+[CEStrings]
+AppName = "WmConsole"
+InstallDir = %CE1%\%AppName%
+
+[Strings]
+Wmc5Bins = "WM5\debug"
+Wmc4Bins = "PPC2003\debug"
+RegPath = "Drivers\BuiltIn\rconsole"
+
+[CEDevice]
+VersionMin = 5.0
+VersionMax = 5.99
+BuildMax = 0xE0000000
+
+[CEDevice.WM4X]
+VersionMin = 4.0
+VersionMax = 4.99
+BuildMax = 0xE0000000
+
+[DefaultInstall]
+CopyFiles = CopyToInstallDir,CopyToWindows
+AddReg = RegSettings
+
+[DestinationDirs]
+CopyToInstallDir = 0,%InstallDir%
+CopyToWindows = 0,%CE2%
+
+[SourceDisksNames]
+1 = ,"WmConsole Files 5.x",,C:\projects\wmconsole\wmconsole\%Wmc5Bins%
+2 = ,"RConsole Files 5.x",,C:\projects\rconsole\rconsole\%Wmc5Bins%
+5 = ,"WmConsole Files",,C:\projects\wmconsole\wmconsole
+
+[SourceDisksNames.WM4X]
+3 = ,"WmConsole Files 4.x",,C:\projects\wmconsole\wmconsole\%Wmc4Bins%
+4 = ,"RConsole Files 4.x",,C:\projects\rconsole\rconsole\%Wmc4Bins%
+5 = ,"WmConsole Files",,C:\projects\wmconsole\wmconsole
+
+[SourceDisksFiles]
+wmconsole.exe = 1
+rconsole.dll = 2
+wmconsole.passwd = 5
+
+[SourceDisksFiles.WM4X]
+wmconsole.exe = 3
+rconsole.dll = 4
+wmconsole.passwd = 5
+
+[CopyToInstallDir]
+wmconsole.exe,wmconsole.exe,0x00000000
+passwd,wmconsole.passwd,0x00000000
+
+[CopyToWindows]
+rconsole.dll,rconsole.dll,0x80000000
+
+[RegSettings]
+HKLM,%RegPath%,,0x00000000,default
+HKLM,%RegPath%,Dll,0x00000000,"rconsole.dll"
+HKLM,%RegPath%,Prefix,0x00000000,"RCX"
+HKLM,%RegPath%,Keep,0x00010001,1
+HKLM,%RegPath%,Flags,0x00010001,2
+HKLM,%RegPath%,Order,0x00010001,9
+
